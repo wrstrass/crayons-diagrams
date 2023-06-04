@@ -4,7 +4,7 @@ from db import diagrams_collection
 
 
 class DiagramModel(BaseModel):
-    _id: ObjectId = PrivateAttr()
+    _id: ObjectId | None = PrivateAttr(None)
     name: str
     description: str
     shapes: Json
