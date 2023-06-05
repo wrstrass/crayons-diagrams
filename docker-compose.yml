@@ -5,8 +5,8 @@ services:
     build: ./
     volumes:
       - .:/app/
-    expose:
-      - ${BACKEND_PORT}
+    ports:
+      - ${BACKEND_PORT}:${BACKEND_PORT}
     env_file:
       - .env
     depends_on:
