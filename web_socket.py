@@ -1,4 +1,5 @@
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect
+from models import DiagramModel
 
 
 class WebSocketManager():
@@ -33,10 +34,14 @@ router = APIRouter()
 @router.websocket("/ws/{diagram_oid}")
 async def websocket_endpoint(websocket: WebSocket, diagram_oid: str):
     await websocket.accept()
+    diagram = await DiagramModel.get_by_id(diagram_oid)
     ws_manager.add(diagram_oid, websocket)
+
     try:
         while True:
             data = await websocket.receive_json()
+            diagram.shapes = data
+            await diagram.save()
             await ws_manager.send(diagram_oid, websocket, data)
     except WebSocketDisconnect:
         ws_manager.remove(diagram_oid, websocket)
