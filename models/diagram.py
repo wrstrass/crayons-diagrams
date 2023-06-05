@@ -1,5 +1,6 @@
+from typing import Any
 from bson import ObjectId
-from pydantic import BaseModel, Json, PrivateAttr
+from pydantic import BaseModel, PrivateAttr
 from db import diagrams_collection
 
 
@@ -7,7 +8,7 @@ class DiagramModel(BaseModel):
     _id: ObjectId | None = PrivateAttr(None)
     name: str
     description: str
-    shapes: Json
+    shapes: Any
 
     _collection = diagrams_collection
 
