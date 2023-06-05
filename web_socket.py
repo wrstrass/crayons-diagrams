@@ -1,4 +1,4 @@
-from fastapi import APIRouter, WebSocket, WebSocketDisconnect
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from models import DiagramModel
 
 
@@ -28,10 +28,10 @@ class WebSocketManager():
         return str(self._websockets)
 
 ws_manager = WebSocketManager()
-router = APIRouter()
+app = FastAPI()
 
 
-@router.websocket("/ws/{diagram_oid}")
+@app.websocket("/ws/{diagram_oid}")
 async def websocket_endpoint(websocket: WebSocket, diagram_oid: str):
     await websocket.accept()
     diagram = await DiagramModel.get_by_id(diagram_oid)

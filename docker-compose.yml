@@ -2,11 +2,28 @@ version: '3'
 
 services:
   diagrams:
-    build: ./
+    build:
+      context: ./
+      target: backend
+    volumes:
+      - .:/app/
+    expose:
+      - ${BACKEND_PORT}
+    env_file:
+      - .env
+    depends_on:
+      - diagrams_mongo_db
+    networks:
+      - crayons
+
+  diagrams-websocket:
+    build:
+      context: ./
+      target: websocket
     volumes:
       - .:/app/
     ports:
-      - ${BACKEND_PORT}:${BACKEND_PORT}
+      - ${WEBSOCKET_PORT}:${WEBSOCKET_PORT}
     env_file:
       - .env
     depends_on:
