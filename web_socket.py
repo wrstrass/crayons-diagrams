@@ -36,6 +36,7 @@ async def websocket_endpoint(websocket: WebSocket, diagram_oid: str):
     await websocket.accept()
     diagram = await DiagramModel.get_by_id(diagram_oid)
     ws_manager.add(diagram_oid, websocket)
+    await websocket.send_json(diagram.shapes)
 
     try:
         while True:

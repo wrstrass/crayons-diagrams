@@ -8,7 +8,7 @@ class DiagramModel(BaseModel):
     _id: ObjectId | None = PrivateAttr(None)
     name: str
     description: str
-    shapes: Any
+    shapes: Any = []
 
     _collection = diagrams_collection
 
